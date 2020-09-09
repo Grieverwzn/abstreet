@@ -33,9 +33,11 @@ pub fn osm_to_raw(name: &str, timer: &mut abstutil::Timer, config: &ImporterConf
                 bikes_can_use_bus_lanes: true,
             },
 
-            onstreet_parking: convert_osm::OnstreetParking::SomeAdditionalWhereNoData { pct: 50 },
+            onstreet_parking: convert_osm::OnstreetParking::JustOSM,
             public_offstreet_parking: convert_osm::PublicOffstreetParking::None,
-            private_offstreet_parking: convert_osm::PrivateOffstreetParking::FixedPerBldg(10),
+            // Since every building has such high capacity, effectively this disables the
+            // parking simulation entirely.
+            private_offstreet_parking: convert_osm::PrivateOffstreetParking::FixedPerBldg(999),
             elevation: None,
             include_railroads: true,
         },

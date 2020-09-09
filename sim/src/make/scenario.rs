@@ -263,6 +263,15 @@ fn seed_parked_cars(
     base_rng: &mut XorShiftRng,
     timer: &mut Timer,
 ) {
+    // TODO In Tel Aviv (or any map with "unlimited" offstreet parking), this is super slow.
+    // Temporarily speed up the empty init case.
+
+    // TODO change the representation of Spot to include capacity? no... some kind of flyweight
+    // pattern or summarization here?
+    if parked_cars.is_empty() {
+        return;
+    }
+
     let mut open_spots_per_road: BTreeMap<RoadID, Vec<(ParkingSpot, Option<BuildingID>)>> =
         BTreeMap::new();
     for spot in sim.get_all_parking_spots().1 {
